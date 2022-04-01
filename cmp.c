@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 #include "cmp.h"
 
-static const uint32_t version = 19;
-static const uint32_t mp_version = 5;
+static const uint32_t _cmp_version = 19;
+static const uint32_t _mp_version = 5;
 
 enum {
   POSITIVE_FIXNUM_MARKER = 0x00,
@@ -785,11 +785,11 @@ void cmp_init(cmp_ctx_t *ctx, void *buf, cmp_reader read,
 }
 
 uint32_t cmp_version(void) {
-  return version;
+  return _cmp_version;
 }
 
 uint32_t cmp_mp_version(void) {
-  return mp_version;
+  return _mp_version;
 }
 
 const char* cmp_strerror(cmp_ctx_t *ctx) {
