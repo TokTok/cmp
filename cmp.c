@@ -3,6 +3,12 @@
  */
 #include "cmp.h"
 
+#ifdef __cplusplus
+#define CMP_NULL nullptr
+#else
+#define CMP_NULL NULL
+#endif /* __cplusplus */
+
 static const uint32_t cmp_version_ = 20;
 static const uint32_t cmp_mp_version_ = 5;
 
@@ -76,26 +82,26 @@ typedef enum cmp_error_t {
 
 static const char *cmp_error_message(cmp_error_t error) {
   switch (error) {
-    case CMP_ERROR_NONE: return "";
-    case CMP_ERROR_STR_DATA_LENGTH_TOO_LONG: return "Specified string data length is too long (> 0xFFFFFFFF)";
-    case CMP_ERROR_BIN_DATA_LENGTH_TOO_LONG: return "Specified binary data length is too long (> 0xFFFFFFFF)";
-    case CMP_ERROR_ARRAY_LENGTH_TOO_LONG: return  "Specified array length is too long (> 0xFFFFFFFF)";
-    case CMP_ERROR_MAP_LENGTH_TOO_LONG: return  "Specified map length is too long (> 0xFFFFFFFF)";
-    case CMP_ERROR_INPUT_VALUE_TOO_LARGE: return  "Input value is too large";
-    case CMP_ERROR_FIXED_VALUE_WRITING: return  "Error writing fixed value";
-    case CMP_ERROR_TYPE_MARKER_READING: return  "Error reading type marker";
-    case CMP_ERROR_TYPE_MARKER_WRITING: return  "Error writing type marker";
-    case CMP_ERROR_DATA_READING: return "Error reading packed data";
-    case CMP_ERROR_DATA_WRITING: return "Error writing packed data";
-    case CMP_ERROR_EXT_TYPE_READING: return "Error reading ext type";
-    case CMP_ERROR_EXT_TYPE_WRITING: return "Error writing ext type";
-    case CMP_ERROR_INVALID_TYPE: return "Invalid type";
-    case CMP_ERROR_LENGTH_READING: return "Error reading size";
-    case CMP_ERROR_LENGTH_WRITING: return "Error writing size";
-    case CMP_ERROR_SKIP_DEPTH_LIMIT_EXCEEDED: return  "Depth limit exceeded while skipping";
-    case CMP_ERROR_INTERNAL: return "Internal error";
-    case CMP_ERROR_DISABLED_FLOATING_POINT: return  "Floating point operations disabled";
-    case CMP_ERROR_MAX: return  "Max Error";
+    case CMP_ERROR_NONE:                      return "No Error";
+    case CMP_ERROR_STR_DATA_LENGTH_TOO_LONG:  return "Specified string data length is too long (> 0xFFFFFFFF)";
+    case CMP_ERROR_BIN_DATA_LENGTH_TOO_LONG:  return "Specified binary data length is too long (> 0xFFFFFFFF)";
+    case CMP_ERROR_ARRAY_LENGTH_TOO_LONG:     return "Specified array length is too long (> 0xFFFFFFFF)";
+    case CMP_ERROR_MAP_LENGTH_TOO_LONG:       return "Specified map length is too long (> 0xFFFFFFFF)";
+    case CMP_ERROR_INPUT_VALUE_TOO_LARGE:     return "Input value is too large";
+    case CMP_ERROR_FIXED_VALUE_WRITING:       return "Error writing fixed value";
+    case CMP_ERROR_TYPE_MARKER_READING:       return "Error reading type marker";
+    case CMP_ERROR_TYPE_MARKER_WRITING:       return "Error writing type marker";
+    case CMP_ERROR_DATA_READING:              return "Error reading packed data";
+    case CMP_ERROR_DATA_WRITING:              return "Error writing packed data";
+    case CMP_ERROR_EXT_TYPE_READING:          return "Error reading ext type";
+    case CMP_ERROR_EXT_TYPE_WRITING:          return "Error writing ext type";
+    case CMP_ERROR_INVALID_TYPE:              return "Invalid type";
+    case CMP_ERROR_LENGTH_READING:            return "Error reading size";
+    case CMP_ERROR_LENGTH_WRITING:            return "Error writing size";
+    case CMP_ERROR_SKIP_DEPTH_LIMIT_EXCEEDED: return "Depth limit exceeded while skipping";
+    case CMP_ERROR_INTERNAL:                  return "Internal error";
+    case CMP_ERROR_DISABLED_FLOATING_POINT:   return "Floating point operations disabled";
+    case CMP_ERROR_MAX:                       return "Max Error";
   }
   return "";
 }
@@ -111,13 +117,9 @@ static bool is_bigendian(void) {
 }
 
 static uint16_t be16(uint16_t x) {
-  char *b = (char *)&x;
-
-  if (!is_bigendian()) {
-    const char swap = b[0];
-    b[0] = b[1];
-    b[1] = swap;
-  }
+  if (!is_bigendian())
+    return ((x >> 8) & 0x00ff)
+         | ((x << 8) & 0xff00);
 
   return x;
 }
@@ -128,8 +130,7 @@ static int16_t sbe16(int16_t x) {
 
 static uint32_t be32(uint32_t x) {
   if (!is_bigendian())
-    return ((uint32_t)be16((uint16_t)(x >> 16)))
-         | ((uint32_t)be16((uint16_t)(x & 0xffff)) << 16);
+    return ((uint32_t)be16((uint16_t)(x & 0xffff)) << 16) | (uint32_t)be16((uint16_t)(x >> 16));
 
   return x;
 }
@@ -140,8 +141,7 @@ static int32_t sbe32(int32_t x) {
 
 static uint64_t be64(uint64_t x) {
   if (!is_bigendian())
-    return ((uint64_t)be32((uint32_t)(x >> 32)))
-         | ((uint64_t)be32((uint32_t)(x & 0xffffffff)) << 32);
+    return ((uint64_t)be32((uint32_t)(x & 0xffffffff)) << 32) | (uint64_t)be32((uint32_t)(x >> 32));
 
   return x;
 }
@@ -209,7 +209,7 @@ static bool write_byte(cmp_ctx_t *ctx, uint8_t x) {
 }
 
 static bool skip_bytes(cmp_ctx_t *ctx, size_t count) {
-  if (ctx->skip != NULL) {
+  if (ctx->skip != CMP_NULL) {
     return ctx->skip(ctx, count);
   }
   else {
@@ -851,7 +851,9 @@ uint32_t cmp_mp_version(void) {
 }
 
 const char* cmp_strerror(cmp_ctx_t *ctx) {
-  return cmp_error_message(ctx->error);
+  if (ctx->error > CMP_ERROR_NONE && ctx->error < CMP_ERROR_MAX)
+    return cmp_error_message((cmp_error_t)ctx->error);
+  return "";
 }
 
 bool cmp_write_pfix(cmp_ctx_t *ctx, uint8_t c) {
@@ -1497,7 +1499,7 @@ bool cmp_write_ext8_marker(cmp_ctx_t *ctx, int8_t type, uint8_t size) {
   if (!write_type_marker(ctx, EXT8_MARKER))
     return false;
 
-  if (!ctx->write(ctx, &size, sizeof(uint8_t))) {
+  if (ctx->write(ctx, &size, sizeof(uint8_t)) != sizeof(uint8_t)) {
     ctx->error = CMP_ERROR_LENGTH_WRITING;
     return false;
   }
@@ -1526,7 +1528,7 @@ bool cmp_write_ext16_marker(cmp_ctx_t *ctx, int8_t type, uint16_t size) {
 
   size = be16(size);
 
-  if (!ctx->write(ctx, &size, sizeof(uint16_t))) {
+  if (ctx->write(ctx, &size, sizeof(uint16_t)) != sizeof(uint16_t)) {
     ctx->error = CMP_ERROR_LENGTH_WRITING;
     return false;
   }
@@ -1555,7 +1557,7 @@ bool cmp_write_ext32_marker(cmp_ctx_t *ctx, int8_t type, uint32_t size) {
 
   size = be32(size);
 
-  if (!ctx->write(ctx, &size, sizeof(uint32_t))) {
+  if (ctx->write(ctx, &size, sizeof(uint32_t)) != sizeof(uint32_t)) {
     ctx->error = CMP_ERROR_LENGTH_WRITING;
     return false;
   }
