@@ -1,27 +1,6 @@
-/*
-The MIT License (MIT)
-
-Copyright (c) 2020 Charles Gunyon
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-*/
-
+/* SPDX-License-Identifier: MIT
+ * Copyright © 2020-2024 Charles Gunyon.
+ */
 #ifndef CMP_H_INCLUDED
 #define CMP_H_INCLUDED
 
@@ -29,12 +8,11 @@ THE SOFTWARE.
 #include <stddef.h>
 #include <stdint.h>
 
-struct cmp_ctx_s;
+typedef struct cmp_ctx_s cmp_ctx_t;
 
-typedef bool   (*cmp_reader)(struct cmp_ctx_s *ctx, void *data, size_t limit);
-typedef bool   (*cmp_skipper)(struct cmp_ctx_s *ctx, size_t count);
-typedef size_t (*cmp_writer)(struct cmp_ctx_s *ctx, const void *data,
-                                                    size_t count);
+typedef bool   cmp_reader(cmp_ctx_t *ctx, void *data, size_t limit);
+typedef bool   cmp_skipper(cmp_ctx_t *ctx, size_t count);
+typedef size_t cmp_writer(cmp_ctx_t *ctx, const void *data, size_t count);
 
 enum {
   CMP_TYPE_POSITIVE_FIXNUM, /*  0 */
@@ -79,7 +57,7 @@ typedef struct cmp_ext_s {
   uint32_t size;
 } cmp_ext_t;
 
-union cmp_object_data_u {
+typedef union cmp_object_data_u {
   bool      boolean;
   uint8_t   u8;
   uint16_t  u16;
@@ -98,19 +76,19 @@ union cmp_object_data_u {
   uint32_t  str_size;
   uint32_t  bin_size;
   cmp_ext_t ext;
-};
+} cmp_object_data_t;
 
-typedef struct cmp_ctx_s {
+struct cmp_ctx_s {
   uint8_t      error;
   void        *buf;
-  cmp_reader   read;
-  cmp_skipper  skip;
-  cmp_writer   write;
-} cmp_ctx_t;
+  cmp_reader  *read;
+  cmp_skipper *skip;
+  cmp_writer  *write;
+};
 
 typedef struct cmp_object_s {
   uint8_t type;
-  union cmp_object_data_u as;
+  cmp_object_data_t as;
 } cmp_object_t;
 
 #ifdef __cplusplus
@@ -134,9 +112,9 @@ extern "C" {
  * If you don't intend to write, `write` may be NULL, but calling `*write*`
  * functions will crash; there is no check.
  */
-void cmp_init(cmp_ctx_t *ctx, void *buf, cmp_reader read,
-                                         cmp_skipper skip,
-                                         cmp_writer write);
+void cmp_init(cmp_ctx_t *ctx, void *buf, cmp_reader *read,
+                                         cmp_skipper *skip,
+                                         cmp_writer *write);
 
 /* Returns CMP's version */
 uint32_t cmp_version(void);
@@ -363,37 +341,6 @@ bool cmp_skip_object_flat(cmp_ctx_t *ctx, cmp_object_t *obj);
 bool cmp_skip_object_no_limit(cmp_ctx_t *ctx);
 
 /*
- * WARNING: THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE
- *
- * There is no way to track depths across elements without allocation.  For
- * example, an array constructed as: `[ [] [] [] [] [] [] [] [] [] [] ]`
- * should be able to be skipped with `cmp_skip_object_limit(&cmp, &obj, 2)`.
- * However, because we cannot track depth across the elements, there's no way
- * to reset it after descending down into each element.
- *
- * This is similar to `cmp_skip_object`, except it tolerates up to `limit`
- * levels of nesting.  For example, in order to skip an array that contains a
- * map, call `cmp_skip_object_limit(ctx, &obj, 2)`.  Or in other words,
- * `cmp_skip_object(ctx, &obj)` acts similarly to `cmp_skip_object_limit(ctx,
- * &obj, 0)`
- *
- * Specifically, `limit` refers to depth, not breadth.  So in order to skip an
- * array that contains two arrays that each contain 3 strings, you would call
- * `cmp_skip_object_limit(ctx, &obj, 2).  In order to skip an array that
- * contains 4 arrays that each contain 1 string, you would still call
- * `cmp_skip_object_limit(ctx, &obj, 2).
- */
-bool cmp_skip_object_limit(cmp_ctx_t *ctx, cmp_object_t *obj, uint32_t limit)
-#ifdef __GNUC__
-  __attribute__((deprecated))
-#endif
-;
-
-#ifdef _MSC_VER
-#pragma deprecated(cmp_skip_object_limit)
-#endif
-
-/*
  * ============================================================================
  * === Specific API
  * ============================================================================
@@ -554,19 +501,6 @@ bool cmp_object_to_bin(cmp_ctx_t *ctx, const cmp_object_t *obj, void *data, uint
 } /* extern "C" */
 #endif
 
-/*
- * ============================================================================
- * === Backwards compatibility defines
- * ============================================================================
- */
-
-#define cmp_write_int      cmp_write_integer
-#define cmp_write_sint     cmp_write_integer
-#define cmp_write_sinteger cmp_write_integer
-#define cmp_write_uint     cmp_write_uinteger
-#define cmp_read_sinteger  cmp_read_integer
-
 #endif /* CMP_H_INCLUDED */
 
 /* vi: set et ts=2 sw=2: */
-

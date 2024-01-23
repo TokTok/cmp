@@ -438,13 +438,13 @@ void test_fixedint(void **state) {
     cmp_write_sfix, cmp_read_uinteger, u8, uint64_t, 0, "\x00", 1
   );
   test_int_format(
-    cmp_write_sfix, cmp_read_sinteger, s8, int64_t, -0, "\x00", 1
+    cmp_write_sfix, cmp_read_integer, s8, int64_t, -0, "\x00", 1
   );
   test_int_format(
     cmp_write_sfix, cmp_read_uinteger, u8, uint64_t, 127, "\x7f", 1
   );
   test_int_format(
-    cmp_write_sfix, cmp_read_sinteger, s8, int64_t, -32, "\xe0", 1
+    cmp_write_sfix, cmp_read_integer, s8, int64_t, -32, "\xe0", 1
   );
   test_int_format(
     cmp_write_pfix, cmp_read_uinteger, u8, uint64_t, 0, "\x00", 1
@@ -456,10 +456,10 @@ void test_fixedint(void **state) {
     cmp_write_pfix, cmp_read_uinteger, u8, uint64_t, 127, "\x7f", 1
   );
   test_int_format(
-    cmp_write_nfix, cmp_read_sinteger, s8, int64_t, -1, "\xff", 1
+    cmp_write_nfix, cmp_read_integer, s8, int64_t, -1, "\xff", 1
   );
   test_int_format(
-    cmp_write_nfix, cmp_read_sinteger, s8, int64_t, -32, "\xe0", 1
+    cmp_write_nfix, cmp_read_integer, s8, int64_t, -32, "\xe0", 1
   );
 
   teardown_cmp_and_buf(&cmp, &buf);
@@ -488,55 +488,55 @@ void test_numbers(void **state) {
   setup_cmp_and_buf(&cmp, &buf);
 
   test_int_format(
-    cmp_write_s8, cmp_read_sinteger, s8, int64_t,  0,   "\xd0\x00", 2
+    cmp_write_s8, cmp_read_integer, s8, int64_t,  0,   "\xd0\x00", 2
   );
   test_int_format(
-    cmp_write_s8, cmp_read_sinteger, s8, int64_t,  1,   "\xd0\x01", 2
+    cmp_write_s8, cmp_read_integer, s8, int64_t,  1,   "\xd0\x01", 2
   );
   test_int_format(
-    cmp_write_s8, cmp_read_sinteger, s8, int64_t, -1,   "\xd0\xff", 2
+    cmp_write_s8, cmp_read_integer, s8, int64_t, -1,   "\xd0\xff", 2
   );
   test_int_format(
-    cmp_write_s8, cmp_read_sinteger, s8, int64_t,  127, "\xd0\x7f", 2
+    cmp_write_s8, cmp_read_integer, s8, int64_t,  127, "\xd0\x7f", 2
   );
   test_int_format(
-    cmp_write_s8, cmp_read_sinteger, s8, int64_t, -128, "\xd0\x80", 2
-  );
-
-  test_int_format(
-    cmp_write_s16, cmp_read_sinteger, s16, int64_t,  0,     "\xd1\x00\x00", 3
-  );
-  test_int_format(
-    cmp_write_s16, cmp_read_sinteger, s16, int64_t,  1,     "\xd1\x00\x01", 3
-  );
-  test_int_format(
-    cmp_write_s16, cmp_read_sinteger, s16, int64_t, -1,     "\xd1\xff\xff", 3
-  );
-  test_int_format(
-    cmp_write_s16, cmp_read_sinteger, s16, int64_t,  127,   "\xd1\x00\x7f", 3
-  );
-  test_int_format(
-    cmp_write_s16, cmp_read_sinteger, s16, int64_t, -128,   "\xd1\xff\x80", 3
-  );
-  test_int_format(
-    cmp_write_s16, cmp_read_sinteger, s16, int64_t,  256,   "\xd1\x01\x00", 3
-  );
-  test_int_format(
-    cmp_write_s16, cmp_read_sinteger, s16, int64_t,  32767, "\xd1\x7f\xff", 3
-  );
-  test_int_format(
-    cmp_write_s16, cmp_read_sinteger, s16, int64_t, -32768, "\xd1\x80\x00", 3
+    cmp_write_s8, cmp_read_integer, s8, int64_t, -128, "\xd0\x80", 2
   );
 
   test_int_format(
-    cmp_write_s32, cmp_read_sinteger, s32, int64_t, 0, "\xd2\x00\x00\x00\x00", 5
+    cmp_write_s16, cmp_read_integer, s16, int64_t,  0,     "\xd1\x00\x00", 3
   );
   test_int_format(
-    cmp_write_s32, cmp_read_sinteger, s32, int64_t, 1, "\xd2\x00\x00\x00\x01", 5
+    cmp_write_s16, cmp_read_integer, s16, int64_t,  1,     "\xd1\x00\x01", 3
+  );
+  test_int_format(
+    cmp_write_s16, cmp_read_integer, s16, int64_t, -1,     "\xd1\xff\xff", 3
+  );
+  test_int_format(
+    cmp_write_s16, cmp_read_integer, s16, int64_t,  127,   "\xd1\x00\x7f", 3
+  );
+  test_int_format(
+    cmp_write_s16, cmp_read_integer, s16, int64_t, -128,   "\xd1\xff\x80", 3
+  );
+  test_int_format(
+    cmp_write_s16, cmp_read_integer, s16, int64_t,  256,   "\xd1\x01\x00", 3
+  );
+  test_int_format(
+    cmp_write_s16, cmp_read_integer, s16, int64_t,  32767, "\xd1\x7f\xff", 3
+  );
+  test_int_format(
+    cmp_write_s16, cmp_read_integer, s16, int64_t, -32768, "\xd1\x80\x00", 3
+  );
+
+  test_int_format(
+    cmp_write_s32, cmp_read_integer, s32, int64_t, 0, "\xd2\x00\x00\x00\x00", 5
+  );
+  test_int_format(
+    cmp_write_s32, cmp_read_integer, s32, int64_t, 1, "\xd2\x00\x00\x00\x01", 5
   );
   test_int_format(
     cmp_write_s32,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s32,
     int64_t,
     -1,
@@ -545,7 +545,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s32,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s32,
     int64_t,
     127,
@@ -554,7 +554,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s32,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s32,
     int64_t,
     -128,
@@ -563,7 +563,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s32,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s32,
     int64_t,
     256,
@@ -572,7 +572,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s32,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s32,
     int64_t,
     32767,
@@ -581,7 +581,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s32,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s32,
     int64_t,
     -32768,
@@ -590,7 +590,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s32,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s32,
     int64_t,
     65535,
@@ -599,7 +599,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s32,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s32,
     int64_t,
     -65536,
@@ -608,7 +608,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s32,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s32,
     int64_t,
     8388607,
@@ -617,7 +617,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s32,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s32,
     int64_t,
     -8388608,
@@ -626,7 +626,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s32,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s32,
     int64_t,
     16777215,
@@ -635,7 +635,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s32,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s32,
     int64_t,
     -16777216,
@@ -644,7 +644,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s32,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s32,
     int64_t,
     2147483647,
@@ -653,7 +653,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s32,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s32,
     int64_t,
     -2147483648,
@@ -663,7 +663,7 @@ void test_numbers(void **state) {
 
   test_int_format(
     cmp_write_s64,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s64,
     int64_t,
     0,
@@ -672,7 +672,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s64,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s64,
     int64_t,
     1,
@@ -681,7 +681,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s64,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s64,
     int64_t,
     -1,
@@ -690,7 +690,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s64,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s64,
     int64_t,
     127,
@@ -699,7 +699,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s64,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s64,
     int64_t,
     -128,
@@ -708,7 +708,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s64,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s64,
     int64_t,
     256,
@@ -717,7 +717,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s64,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s64,
     int64_t,
     32767,
@@ -726,7 +726,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s64,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s64,
     int64_t,
     -32768,
@@ -735,7 +735,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s64,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s64,
     int64_t,
     65535,
@@ -744,7 +744,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s64,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s64,
     int64_t,
     -65536,
@@ -753,7 +753,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s64,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s64,
     int64_t,
     8388607,
@@ -762,7 +762,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s64,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s64,
     int64_t,
     -8388608,
@@ -771,7 +771,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s64,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s64,
     int64_t,
     16777215,
@@ -780,7 +780,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s64,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s64,
     int64_t,
     -16777216,
@@ -789,7 +789,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s64,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s64,
     int64_t,
     2147483647,
@@ -798,7 +798,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s64,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s64,
     int64_t,
     -2147483648,
@@ -807,7 +807,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s64,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s64,
     int64_t,
     4294967295,
@@ -816,7 +816,7 @@ void test_numbers(void **state) {
   );
   test_int_format(
     cmp_write_s64,
-    cmp_read_sinteger,
+    cmp_read_integer,
     s64,
     int64_t,
     -4294967296,
@@ -825,34 +825,34 @@ void test_numbers(void **state) {
   );
 
   test_int_format(
-    cmp_write_sint, cmp_read_uinteger, u8, uint64_t, 0, "\x00", 1
+    cmp_write_integer, cmp_read_uinteger, u8, uint64_t, 0, "\x00", 1
   );
   test_int_format(
-    cmp_write_sint, cmp_read_uinteger, u8, uint64_t, 1, "\x01", 1
+    cmp_write_integer, cmp_read_uinteger, u8, uint64_t, 1, "\x01", 1
   );
   test_int_format(
-    cmp_write_sint, cmp_read_uinteger, u8, uint64_t, 127, "\x7f", 1
+    cmp_write_integer, cmp_read_uinteger, u8, uint64_t, 127, "\x7f", 1
   );
   test_int_format(
-    cmp_write_sint, cmp_read_uinteger, u8, uint64_t, 128, "\xcc\x80", 2
+    cmp_write_integer, cmp_read_uinteger, u8, uint64_t, 128, "\xcc\x80", 2
   );
   test_int_format(
-    cmp_write_sint, cmp_read_uinteger, u8, uint64_t, 255, "\xcc\xff", 2
+    cmp_write_integer, cmp_read_uinteger, u8, uint64_t, 255, "\xcc\xff", 2
   );
   test_int_format(
-    cmp_write_sint, cmp_read_uinteger, u16, uint64_t, 256, "\xcd\x01\x00", 3
+    cmp_write_integer, cmp_read_uinteger, u16, uint64_t, 256, "\xcd\x01\x00", 3
   );
   test_int_format(
-    cmp_write_sint, cmp_read_uinteger, u16, uint64_t, 32767, "\xcd\x7f\xff", 3
+    cmp_write_integer, cmp_read_uinteger, u16, uint64_t, 32767, "\xcd\x7f\xff", 3
   );
   test_int_format(
-    cmp_write_sint, cmp_read_uinteger, u16, uint64_t, 32768, "\xcd\x80\x00", 3
+    cmp_write_integer, cmp_read_uinteger, u16, uint64_t, 32768, "\xcd\x80\x00", 3
   );
   test_int_format(
-    cmp_write_sint, cmp_read_uinteger, u16, uint64_t, 65535, "\xcd\xff\xff", 3
+    cmp_write_integer, cmp_read_uinteger, u16, uint64_t, 65535, "\xcd\xff\xff", 3
   );
   test_int_format(
-    cmp_write_sint,
+    cmp_write_integer,
     cmp_read_uinteger,
     u32,
     uint64_t,
@@ -861,7 +861,7 @@ void test_numbers(void **state) {
     5
   );
   test_int_format(
-    cmp_write_sint,
+    cmp_write_integer,
     cmp_read_uinteger,
     u32,
     uint64_t,
@@ -870,7 +870,7 @@ void test_numbers(void **state) {
     5
   );
   test_int_format(
-    cmp_write_sint,
+    cmp_write_integer,
     cmp_read_uinteger,
     u32,
     uint64_t,
@@ -879,7 +879,7 @@ void test_numbers(void **state) {
     5
   );
   test_int_format(
-    cmp_write_sint,
+    cmp_write_integer,
     cmp_read_uinteger,
     u32,
     uint64_t,
@@ -888,7 +888,7 @@ void test_numbers(void **state) {
     5
   );
   test_int_format(
-    cmp_write_sint,
+    cmp_write_integer,
     cmp_read_uinteger,
     u32,
     uint64_t,
@@ -897,7 +897,7 @@ void test_numbers(void **state) {
     5
   );
   test_int_format(
-    cmp_write_sint,
+    cmp_write_integer,
     cmp_read_uinteger,
     u32,
     uint64_t,
@@ -906,7 +906,7 @@ void test_numbers(void **state) {
     5
   );
   test_int_format(
-    cmp_write_sint,
+    cmp_write_integer,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -915,7 +915,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
+    cmp_write_integer,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -924,7 +924,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
+    cmp_write_integer,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -933,7 +933,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
+    cmp_write_integer,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -942,7 +942,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
+    cmp_write_integer,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -951,7 +951,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
+    cmp_write_integer,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -960,7 +960,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
+    cmp_write_integer,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -969,7 +969,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
+    cmp_write_integer,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -978,7 +978,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
+    cmp_write_integer,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -987,7 +987,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
+    cmp_write_integer,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -996,7 +996,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
+    cmp_write_integer,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -1005,7 +1005,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
+    cmp_write_integer,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -1014,7 +1014,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
+    cmp_write_integer,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -1023,7 +1023,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
+    cmp_write_integer,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -1033,32 +1033,32 @@ void test_numbers(void **state) {
   );
 
   test_int_format(
-    cmp_write_sint, cmp_read_sinteger, s8, int64_t, -1, "\xff", 1
+    cmp_write_integer, cmp_read_integer, s8, int64_t, -1, "\xff", 1
   );
   test_int_format(
-    cmp_write_sint, cmp_read_sinteger, s8, int64_t, -32, "\xe0", 1
+    cmp_write_integer, cmp_read_integer, s8, int64_t, -32, "\xe0", 1
   );
   test_int_format(
-    cmp_write_sint, cmp_read_sinteger, s8, int64_t, -127, "\xd0\x81", 2
+    cmp_write_integer, cmp_read_integer, s8, int64_t, -127, "\xd0\x81", 2
   );
   test_int_format(
-    cmp_write_sint, cmp_read_sinteger, s8, int64_t, -128, "\xd0\x80", 2
+    cmp_write_integer, cmp_read_integer, s8, int64_t, -128, "\xd0\x80", 2
   );
   test_int_format(
-    cmp_write_sint, cmp_read_sinteger, s16, int64_t, -255, "\xd1\xff\x01", 3
+    cmp_write_integer, cmp_read_integer, s16, int64_t, -255, "\xd1\xff\x01", 3
   );
   test_int_format(
-    cmp_write_sint, cmp_read_sinteger, s16, int64_t, -256, "\xd1\xff\x00", 3
+    cmp_write_integer, cmp_read_integer, s16, int64_t, -256, "\xd1\xff\x00", 3
   );
   test_int_format(
-    cmp_write_sint, cmp_read_sinteger, s16, int64_t, -32767, "\xd1\x80\x01", 3
+    cmp_write_integer, cmp_read_integer, s16, int64_t, -32767, "\xd1\x80\x01", 3
   );
   test_int_format(
-    cmp_write_sint, cmp_read_sinteger, s16, int64_t, -32768, "\xd1\x80\x00", 3
+    cmp_write_integer, cmp_read_integer, s16, int64_t, -32768, "\xd1\x80\x00", 3
   );
   test_int_format(
-    cmp_write_sint,
-    cmp_read_sinteger,
+    cmp_write_integer,
+    cmp_read_integer,
     s32,
     int64_t,
     -65535,
@@ -1066,8 +1066,8 @@ void test_numbers(void **state) {
     5
   );
   test_int_format(
-    cmp_write_sint,
-    cmp_read_sinteger,
+    cmp_write_integer,
+    cmp_read_integer,
     s32,
     int64_t,
     -65536,
@@ -1075,8 +1075,8 @@ void test_numbers(void **state) {
     5
   );
   test_int_format(
-    cmp_write_sint,
-    cmp_read_sinteger,
+    cmp_write_integer,
+    cmp_read_integer,
     s32,
     int64_t,
     -8388607,
@@ -1084,8 +1084,8 @@ void test_numbers(void **state) {
     5
   );
   test_int_format(
-    cmp_write_sint,
-    cmp_read_sinteger,
+    cmp_write_integer,
+    cmp_read_integer,
     s32,
     int64_t,
     -8388608,
@@ -1093,8 +1093,8 @@ void test_numbers(void **state) {
     5
   );
   test_int_format(
-    cmp_write_sint,
-    cmp_read_sinteger,
+    cmp_write_integer,
+    cmp_read_integer,
     s32,
     int64_t,
     -16777215,
@@ -1102,8 +1102,8 @@ void test_numbers(void **state) {
     5
   );
   test_int_format(
-    cmp_write_sint,
-    cmp_read_sinteger,
+    cmp_write_integer,
+    cmp_read_integer,
     s32,
     int64_t,
     -16777216,
@@ -1111,8 +1111,8 @@ void test_numbers(void **state) {
     5
   );
   test_int_format(
-    cmp_write_sint,
-    cmp_read_sinteger,
+    cmp_write_integer,
+    cmp_read_integer,
     s32,
     int64_t,
     -2147483647,
@@ -1120,8 +1120,8 @@ void test_numbers(void **state) {
     5
   );
   test_int_format(
-    cmp_write_sint,
-    cmp_read_sinteger,
+    cmp_write_integer,
+    cmp_read_integer,
     s32,
     int64_t,
     -2147483648,
@@ -1129,8 +1129,8 @@ void test_numbers(void **state) {
     5
   );
   test_int_format(
-    cmp_write_sint,
-    cmp_read_sinteger,
+    cmp_write_integer,
+    cmp_read_integer,
     s64,
     int64_t,
     -4294967295,
@@ -1138,8 +1138,8 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
-    cmp_read_sinteger,
+    cmp_write_integer,
+    cmp_read_integer,
     s64,
     int64_t,
     -4294967296,
@@ -1147,8 +1147,8 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
-    cmp_read_sinteger,
+    cmp_write_integer,
+    cmp_read_integer,
     s64,
     int64_t,
     -549755813887,
@@ -1156,8 +1156,8 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
-    cmp_read_sinteger,
+    cmp_write_integer,
+    cmp_read_integer,
     s64,
     int64_t,
     -549755813888,
@@ -1165,8 +1165,8 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
-    cmp_read_sinteger,
+    cmp_write_integer,
+    cmp_read_integer,
     s64,
     int64_t,
     -1099511627775,
@@ -1174,8 +1174,8 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
-    cmp_read_sinteger,
+    cmp_write_integer,
+    cmp_read_integer,
     s64,
     int64_t,
     -1099511627776,
@@ -1183,8 +1183,8 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
-    cmp_read_sinteger,
+    cmp_write_integer,
+    cmp_read_integer,
     s64,
     int64_t,
     -140737488355327,
@@ -1192,8 +1192,8 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
-    cmp_read_sinteger,
+    cmp_write_integer,
+    cmp_read_integer,
     s64,
     int64_t,
     -140737488355328,
@@ -1201,8 +1201,8 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
-    cmp_read_sinteger,
+    cmp_write_integer,
+    cmp_read_integer,
     s64,
     int64_t,
     -281474976710655,
@@ -1210,8 +1210,8 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
-    cmp_read_sinteger,
+    cmp_write_integer,
+    cmp_read_integer,
     s64,
     int64_t,
     -281474976710656,
@@ -1219,8 +1219,8 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
-    cmp_read_sinteger,
+    cmp_write_integer,
+    cmp_read_integer,
     s64,
     int64_t,
     -36028797018963967,
@@ -1228,8 +1228,8 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
-    cmp_read_sinteger,
+    cmp_write_integer,
+    cmp_read_integer,
     s64,
     int64_t,
     -36028797018963968,
@@ -1237,8 +1237,8 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
-    cmp_read_sinteger,
+    cmp_write_integer,
+    cmp_read_integer,
     s64,
     int64_t,
     -72057594037927935,
@@ -1246,8 +1246,8 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
-    cmp_read_sinteger,
+    cmp_write_integer,
+    cmp_read_integer,
     s64,
     int64_t,
     -72057594037927936,
@@ -1255,8 +1255,8 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_sint,
-    cmp_read_sinteger,
+    cmp_write_integer,
+    cmp_read_integer,
     s64,
     int64_t,
     -9223372036854775807,
@@ -1517,34 +1517,34 @@ void test_numbers(void **state) {
   );
 
   test_int_format(
-    cmp_write_uint, cmp_read_uinteger, u8, uint64_t, 0, "\x00", 1
+    cmp_write_uinteger, cmp_read_uinteger, u8, uint64_t, 0, "\x00", 1
   );
   test_int_format(
-    cmp_write_uint, cmp_read_uinteger, u8, uint64_t, 1, "\x01", 1
+    cmp_write_uinteger, cmp_read_uinteger, u8, uint64_t, 1, "\x01", 1
   );
   test_int_format(
-    cmp_write_uint, cmp_read_uinteger, u8, uint64_t, 127, "\x7f", 1
+    cmp_write_uinteger, cmp_read_uinteger, u8, uint64_t, 127, "\x7f", 1
   );
   test_int_format(
-    cmp_write_uint, cmp_read_uinteger, u8, uint64_t, 128, "\xcc\x80", 2
+    cmp_write_uinteger, cmp_read_uinteger, u8, uint64_t, 128, "\xcc\x80", 2
   );
   test_int_format(
-    cmp_write_uint, cmp_read_uinteger, u8, uint64_t, 255, "\xcc\xff", 2
+    cmp_write_uinteger, cmp_read_uinteger, u8, uint64_t, 255, "\xcc\xff", 2
   );
   test_int_format(
-    cmp_write_uint, cmp_read_uinteger, u16, uint64_t, 256, "\xcd\x01\x00", 3
+    cmp_write_uinteger, cmp_read_uinteger, u16, uint64_t, 256, "\xcd\x01\x00", 3
   );
   test_int_format(
-    cmp_write_uint, cmp_read_uinteger, u16, uint64_t, 32767, "\xcd\x7f\xff", 3
+    cmp_write_uinteger, cmp_read_uinteger, u16, uint64_t, 32767, "\xcd\x7f\xff", 3
   );
   test_int_format(
-    cmp_write_uint, cmp_read_uinteger, u16, uint64_t, 32768, "\xcd\x80\x00", 3
+    cmp_write_uinteger, cmp_read_uinteger, u16, uint64_t, 32768, "\xcd\x80\x00", 3
   );
   test_int_format(
-    cmp_write_uint, cmp_read_uinteger, u16, uint64_t, 65535, "\xcd\xff\xff", 3
+    cmp_write_uinteger, cmp_read_uinteger, u16, uint64_t, 65535, "\xcd\xff\xff", 3
   );
   test_int_format(
-    cmp_write_uint,
+    cmp_write_uinteger,
     cmp_read_uinteger,
     u32,
     uint64_t,
@@ -1553,7 +1553,7 @@ void test_numbers(void **state) {
     5
   );
   test_int_format(
-    cmp_write_uint,
+    cmp_write_uinteger,
     cmp_read_uinteger,
     u32,
     uint64_t,
@@ -1562,7 +1562,7 @@ void test_numbers(void **state) {
     5
   );
   test_int_format(
-    cmp_write_uint,
+    cmp_write_uinteger,
     cmp_read_uinteger,
     u32,
     uint64_t,
@@ -1571,7 +1571,7 @@ void test_numbers(void **state) {
     5
   );
   test_int_format(
-    cmp_write_uint,
+    cmp_write_uinteger,
     cmp_read_uinteger,
     u32,
     uint64_t,
@@ -1580,7 +1580,7 @@ void test_numbers(void **state) {
     5
   );
   test_int_format(
-    cmp_write_uint,
+    cmp_write_uinteger,
     cmp_read_uinteger,
     u32,
     uint64_t,
@@ -1589,7 +1589,7 @@ void test_numbers(void **state) {
     5
   );
   test_int_format(
-    cmp_write_uint,
+    cmp_write_uinteger,
     cmp_read_uinteger,
     u32,
     uint64_t,
@@ -1598,7 +1598,7 @@ void test_numbers(void **state) {
     5
   );
   test_int_format(
-    cmp_write_uint,
+    cmp_write_uinteger,
     cmp_read_uinteger,
     u32,
     uint64_t,
@@ -1607,7 +1607,7 @@ void test_numbers(void **state) {
     5
   );
   test_int_format(
-    cmp_write_uint,
+    cmp_write_uinteger,
     cmp_read_uinteger,
     u32,
     uint64_t,
@@ -1616,7 +1616,7 @@ void test_numbers(void **state) {
     5
   );
   test_int_format(
-    cmp_write_uint,
+    cmp_write_uinteger,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -1625,7 +1625,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_uint,
+    cmp_write_uinteger,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -1634,7 +1634,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_uint,
+    cmp_write_uinteger,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -1643,7 +1643,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_uint,
+    cmp_write_uinteger,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -1652,7 +1652,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_uint,
+    cmp_write_uinteger,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -1661,7 +1661,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_uint,
+    cmp_write_uinteger,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -1670,7 +1670,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_uint,
+    cmp_write_uinteger,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -1679,7 +1679,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_uint,
+    cmp_write_uinteger,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -1688,7 +1688,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_uint,
+    cmp_write_uinteger,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -1697,7 +1697,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_uint,
+    cmp_write_uinteger,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -1706,7 +1706,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_uint,
+    cmp_write_uinteger,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -1715,7 +1715,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_uint,
+    cmp_write_uinteger,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -1724,7 +1724,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_uint,
+    cmp_write_uinteger,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -1733,7 +1733,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_uint,
+    cmp_write_uinteger,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -1742,7 +1742,7 @@ void test_numbers(void **state) {
     9
   );
   test_int_format(
-    cmp_write_uint,
+    cmp_write_uinteger,
     cmp_read_uinteger,
     u64,
     uint64_t,
@@ -3448,7 +3448,7 @@ void test_obj(void **state) {
 
   setup_cmp_and_buf(&cmp, &buf);
 
-  obj_write(cmp_write_sint, -1);
+  obj_write(cmp_write_integer, -1);
   obj_test(cmp_object_is_char, cmp_object_as_char, "char", int8_t, -1);
   obj_test(cmp_object_is_short, cmp_object_as_short, "short", int16_t, -1);
   obj_test(cmp_object_is_int, cmp_object_as_int, "int", int32_t, -1);
@@ -3473,7 +3473,7 @@ void test_obj(void **state) {
   obj_test_not(cmp_object_is_map, "map");
   obj_test_not(cmp_object_is_ext, "ext");
 
-  obj_write(cmp_write_sint, -129);
+  obj_write(cmp_write_integer, -129);
   obj_test(cmp_object_is_short, cmp_object_as_short, "short", int16_t, -129);
   obj_test(cmp_object_is_int, cmp_object_as_int, "int", int32_t, -129);
   obj_test(cmp_object_is_long, cmp_object_as_long, "long", int64_t, -129);
@@ -3498,7 +3498,7 @@ void test_obj(void **state) {
   obj_test_not(cmp_object_is_map, "map");
   obj_test_not(cmp_object_is_ext, "ext");
 
-  obj_write(cmp_write_sint, -32769);
+  obj_write(cmp_write_integer, -32769);
   obj_test(cmp_object_is_int, cmp_object_as_int, "int", int32_t, -32769);
   obj_test(cmp_object_is_long, cmp_object_as_long, "long", int64_t, -32769);
   obj_test(
@@ -3523,7 +3523,7 @@ void test_obj(void **state) {
   obj_test_not(cmp_object_is_map, "map");
   obj_test_not(cmp_object_is_ext, "ext");
 
-  obj_write(cmp_write_sint, -2147483649);
+  obj_write(cmp_write_integer, -2147483649);
   obj_test(
     cmp_object_is_long, cmp_object_as_long, "long", int64_t, -2147483649
   );
@@ -3553,7 +3553,7 @@ void test_obj(void **state) {
   obj_test_not(cmp_object_is_map, "map");
   obj_test_not(cmp_object_is_ext, "ext");
 
-  obj_write(cmp_write_uint, 1);
+  obj_write(cmp_write_uinteger, 1);
   obj_test(cmp_object_is_uchar, cmp_object_as_uchar, "uchar", uint8_t, 1);
   obj_test(cmp_object_is_ushort, cmp_object_as_ushort, "ushort", uint16_t, 1);
   obj_test(cmp_object_is_uint, cmp_object_as_uint, "uint", uint32_t, 1);
@@ -3578,7 +3578,7 @@ void test_obj(void **state) {
   obj_test_not(cmp_object_is_map, "map");
   obj_test_not(cmp_object_is_ext, "ext");
 
-  obj_write(cmp_write_uint, 255);
+  obj_write(cmp_write_uinteger, 255);
   obj_test(cmp_object_is_uchar, cmp_object_as_uchar, "uchar", uint8_t, 255);
   obj_test(
     cmp_object_is_ushort, cmp_object_as_ushort, "ushort", uint16_t, 255
@@ -3605,7 +3605,7 @@ void test_obj(void **state) {
   obj_test_not(cmp_object_is_map, "map");
   obj_test_not(cmp_object_is_ext, "ext");
 
-  obj_write(cmp_write_uint, 256);
+  obj_write(cmp_write_uinteger, 256);
   obj_test(
     cmp_object_is_ushort, cmp_object_as_ushort, "ushort", uint16_t, 256
   );
@@ -3632,7 +3632,7 @@ void test_obj(void **state) {
   obj_test_not(cmp_object_is_map, "map");
   obj_test_not(cmp_object_is_ext, "ext");
 
-  obj_write(cmp_write_uint, 65535);
+  obj_write(cmp_write_uinteger, 65535);
   obj_test(
     cmp_object_is_ushort, cmp_object_as_ushort, "ushort", uint16_t, 65535
   );
@@ -3662,7 +3662,7 @@ void test_obj(void **state) {
   obj_test_not(cmp_object_is_map, "map");
   obj_test_not(cmp_object_is_ext, "ext");
 
-  obj_write(cmp_write_uint, 65536);
+  obj_write(cmp_write_uinteger, 65536);
   obj_test(cmp_object_is_uint, cmp_object_as_uint, "uint", uint32_t, 65536);
   obj_test(cmp_object_is_ulong, cmp_object_as_ulong, "ulong", uint64_t, 65536);
   obj_test(
@@ -3691,7 +3691,7 @@ void test_obj(void **state) {
   obj_test_not(cmp_object_is_map, "map");
   obj_test_not(cmp_object_is_ext, "ext");
 
-  obj_write(cmp_write_uint, 4294967295);
+  obj_write(cmp_write_uinteger, 4294967295);
   obj_test(
     cmp_object_is_uint, cmp_object_as_uint, "uint", uint32_t, 4294967295
   );
@@ -3724,7 +3724,7 @@ void test_obj(void **state) {
   obj_test_not(cmp_object_is_map, "map");
   obj_test_not(cmp_object_is_ext, "ext");
 
-  obj_write(cmp_write_uint, 4294967296);
+  obj_write(cmp_write_uinteger, 4294967296);
   obj_test(
     cmp_object_is_ulong, cmp_object_as_ulong, "ulong", uint64_t, 4294967296
   );
@@ -4010,8 +4010,8 @@ void test_obj(void **state) {
 
   M_BufferSeek(&buf, 0);
   cmp_write_array(&cmp, 2);
-  cmp_write_uint(&cmp, 1);
-  cmp_write_uint(&cmp, 2);
+  cmp_write_uinteger(&cmp, 1);
+  cmp_write_uinteger(&cmp, 2);
   M_BufferSeek(&buf, 0);
   cmp_read_object(&cmp, &obj);
   obj_array_test(1, 2);
@@ -4038,8 +4038,8 @@ void test_obj(void **state) {
 
   M_BufferSeek(&buf, 0);
   cmp_write_map(&cmp, 1);
-  cmp_write_uint(&cmp, 1);
-  cmp_write_uint(&cmp, 2);
+  cmp_write_uinteger(&cmp, 1);
+  cmp_write_uinteger(&cmp, 2);
   M_BufferSeek(&buf, 0);
   cmp_read_object(&cmp, &obj);
   obj_map_test(1, 2);
@@ -4305,7 +4305,7 @@ void test_skipping(void **state) {
   buf_t buf;
   cmp_ctx_t cmp;
   cmp_object_t obj;
-  cmp_skipper skip;
+  cmp_skipper *skip;
 
   (void)state;
 
@@ -4700,7 +4700,7 @@ void test_deprecated_limited_skipping(void **state) {
   buf_t buf;
   cmp_ctx_t cmp;
   cmp_object_t obj;
-  cmp_skipper skip;
+  cmp_skipper *skip;
 
   (void)state;
 
@@ -4779,22 +4779,16 @@ void test_deprecated_limited_skipping(void **state) {
   assert_true(cmp_skip_object_no_limit(&cmp));
   assert_true(cmp_skip_object_no_limit(&cmp));
   assert_true(cmp_skip_object_no_limit(&cmp));
-  assert_true(cmp_skip_object_limit(&cmp, &obj, 11));
-  assert_false(cmp_skip_object_limit(&cmp, &obj, 1));
 
   M_BufferSeek(&buf, 0);
   assert_true(cmp_skip_object_no_limit(&cmp));
   assert_true(cmp_skip_object_no_limit(&cmp));
   assert_true(cmp_skip_object_no_limit(&cmp));
-  assert_true(cmp_skip_object_limit(&cmp, &obj, 11));
-  assert_false(cmp_skip_object_limit(&cmp, &obj, 2));
 
   M_BufferSeek(&buf, 0);
   assert_true(cmp_skip_object_no_limit(&cmp));
   assert_true(cmp_skip_object_no_limit(&cmp));
   assert_true(cmp_skip_object_no_limit(&cmp));
-  assert_true(cmp_skip_object_limit(&cmp, &obj, 11));
-  assert_true(cmp_skip_object_limit(&cmp, &obj, 3));
 
   M_BufferSeek(&buf, 0);
   assert_true(cmp_read_object(&cmp, &obj));
