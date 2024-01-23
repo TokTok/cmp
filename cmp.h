@@ -488,7 +488,7 @@ bool cmp_object_as_uinteger(const cmp_object_t *obj, uint64_t *u);
 #ifndef CMP_NO_FLOAT
 bool cmp_object_as_float(const cmp_object_t *obj, float *f);
 bool cmp_object_as_double(const cmp_object_t *obj, double *d);
-#endif
+#endif /* CMP_NO_FLOAT */
 bool cmp_object_as_bool(const cmp_object_t *obj, bool *b);
 bool cmp_object_as_str(const cmp_object_t *obj, uint32_t *size);
 bool cmp_object_as_bin(const cmp_object_t *obj, uint32_t *size);
