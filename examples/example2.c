@@ -87,11 +87,11 @@ int main(void) {
         error_and_exit(cmp_strerror(&cmp));
     }
 
-    if (!cmp_write_sint(&cmp, -14)) {
+    if (!cmp_write_integer(&cmp, -14)) {
         error_and_exit(cmp_strerror(&cmp));
     }
 
-    if (!cmp_write_uint(&cmp, 38)) {
+    if (!cmp_write_uinteger(&cmp, 38)) {
         error_and_exit(cmp_strerror(&cmp));
     }
 
@@ -209,7 +209,7 @@ int main(void) {
         error_and_exit("Array size was not 9");
     }
 
-    if (!cmp_read_sinteger(&cmp, &sint)) {
+    if (!cmp_read_integer(&cmp, &sint)) {
         error_and_exit(cmp_strerror(&cmp));
     }
 
