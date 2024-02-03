@@ -919,13 +919,13 @@ bool cmp_write_s64(cmp_ctx_t *ctx, int64_t l) {
 bool cmp_write_integer(cmp_ctx_t *ctx, int64_t d) {
   if (d >= 0)
     return cmp_write_uinteger(ctx, (uint64_t)d);
-  if (d >= -32)
+  if (d >= -0x20)
     return cmp_write_nfix(ctx, (int8_t)d);
-  if (d >= -128)
+  if (d >= -0x80)
     return cmp_write_s8(ctx, (int8_t)d);
-  if (d >= -32768)
+  if (d >= -0x8000)
     return cmp_write_s16(ctx, (int16_t)d);
-  if (d >= (-2147483647 - 1))
+  if (d >= -INT64_C(0x80000000))
     return cmp_write_s32(ctx, (int32_t)d);
 
   return cmp_write_s64(ctx, d);
@@ -1963,7 +1963,7 @@ bool cmp_read_short(cmp_ctx_t *ctx, int16_t *s) {
       return true;
     }
     case CMP_TYPE_UINT16: {
-      if (obj.as.u16 <= 32767) {
+      if (obj.as.u16 <= 0x7fff) {
         *s = (int16_t)obj.as.u16;
         return true;
       }
@@ -2007,7 +2007,7 @@ bool cmp_read_int(cmp_ctx_t *ctx, int32_t *i) {
       return true;
     }
     case CMP_TYPE_UINT32: {
-      if (obj.as.u32 <= 2147483647) {
+      if (obj.as.u32 <= 0x7fffffff) {
         *i = (int32_t)obj.as.u32;
         return true;
       }
@@ -2059,7 +2059,7 @@ bool cmp_read_long(cmp_ctx_t *ctx, int64_t *d) {
       return true;
     }
     case CMP_TYPE_UINT64: {
-      if (obj.as.u64 <= 9223372036854775807) {
+      if (obj.as.u64 <= UINT64_C(0x7fffffffffffffff)) {
         *d = (int64_t)obj.as.u64;
         return true;
       }
@@ -3288,7 +3288,7 @@ bool cmp_object_as_short(const cmp_object_t *obj, int16_t *s) {
       return true;
     }
     case CMP_TYPE_UINT16: {
-      if (obj->as.u16 <= 32767) {
+      if (obj->as.u16 <= 0x7fff) {
         *s = (int16_t)obj->as.u16;
         return true;
       }
@@ -3326,7 +3326,7 @@ bool cmp_object_as_int(const cmp_object_t *obj, int32_t *i) {
       return true;
     }
     case CMP_TYPE_UINT32: {
-      if (obj->as.u32 <= 2147483647) {
+      if (obj->as.u32 <= 0x7fffffff) {
         *i = (int32_t)obj->as.u32;
         return true;
       }
@@ -3372,7 +3372,7 @@ bool cmp_object_as_long(const cmp_object_t *obj, int64_t *d) {
       return true;
     }
     case CMP_TYPE_UINT64: {
-      if (obj->as.u64 <= 9223372036854775807) {
+      if (obj->as.u64 <= UINT64_C(0x7fffffffffffffff)) {
         *d = (int64_t)obj->as.u64;
         return true;
       }
