@@ -17,3 +17,5 @@ jobs:
         run: make testprogs
       - name: Run tests
         run: make test
+      - name: Compile as C++
+        run: g++ -fsyntax-only -xc++ cmp.c
