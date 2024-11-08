@@ -57,7 +57,7 @@ enum {
   FIXSTR_SIZE   = 0x1F
 };
 
-typedef enum cmp_error_t {
+typedef enum cmp_error_e {
   CMP_ERROR_NONE,
   CMP_ERROR_STR_DATA_LENGTH_TOO_LONG,
   CMP_ERROR_BIN_DATA_LENGTH_TOO_LONG,
